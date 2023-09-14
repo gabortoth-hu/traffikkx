@@ -17,11 +17,15 @@ export default class Map {
 
         const planeGeometry = new THREE.PlaneGeometry(this.mapWidth, this.mapHeight);
         const planeMaterial = new THREE.MeshLambertMaterial({
-            map: lineMarkingsTexture
+            //map: lineMarkingsTexture,
+            //side: THREE.DoubleSide
+            color: this.trackColor
         });
         const plane = new THREE.Mesh(planeGeometry, planeMaterial);
         plane.receiveShadow = true;
-        plane.matrixAutoUpdate = false;
+        //plane.matrixAutoUpdate = false;
+        plane.rotation.x = -Math.PI / 2; 
+
         return plane;
     }
 

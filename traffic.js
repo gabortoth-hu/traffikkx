@@ -5,6 +5,7 @@ import * as THREE from "three";
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import Car from "./car.js";
 import Map from "./map.js"
+import NotHelper from "./not_helper.js";
 
 const scene = new THREE.Scene();
 
@@ -34,12 +35,20 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 camera.position.set(100, 100, 100);
 camera.lookAt(0, 10, 0);
 
+NotHelper.ShowAxes(100,scene);
 
 const car = new Car()
 scene.add(car)
 
-const map = new Map(cameraWidth*2, cameraHeight*2)
-scene.add(map.Render())
+const map = new Map(1000, 1000)
+const rendered_map = map.Render()
+scene.add(rendered_map)
+
+//var sphereGeometry = new THREE.SphereGeometry(3, 32, 32);
+//var sphereMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 }); 
+//var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+//sphere.position.set(40, 0, 0);
+//scene.add(sphere)
 
 // Set up renderer
 const renderer = new THREE.WebGLRenderer({ antialias: true });
