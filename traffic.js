@@ -4,6 +4,7 @@
 import * as THREE from "three";
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import Car from "./car.js";
+import Truck from "./truck.js";
 import Map from "./map.js"
 import NotHelper from "./not_helper.js";
 
@@ -37,8 +38,11 @@ camera.lookAt(0, 10, 0);
 
 NotHelper.ShowAxes(100,scene);
 
-const car = new Car()
-scene.add(car)
+//const car = new Car()
+//scene.add(car)
+
+const truck = new Truck();
+scene.add(truck);
 
 const map = new Map(1000, 1000)
 const rendered_map = map.Render()
