@@ -18,11 +18,18 @@ export default class Vehicle {
     offsetX = 0;
     offsetY = 0;
     offsetZ = 0;
+    speed = 0;
+    power = 1.2;
+    threeObject;
 
     constructor(offsetX = 0, offsetY=0, offsetZ=0) {
         this.offsetX = offsetX;
         this.offsetY = offsetY;
         this.offsetZ = offsetZ;
+    }
+
+    AddToScene(scene) {
+        scene.add(this.threeObject);
     }
 
     Wheel() {
@@ -32,5 +39,16 @@ export default class Vehicle {
         return wheel;
     }
 
+    Accelerate() {
+        this.speed = this.speed == 0 ? 0.1 : this.speed * this.power;
+        console.log('Speed: '+this.speed);
+    }
 
+    Decelerate(){
+        this.speed = this.speed == 0 ? -0.1 : this.speed * this.power;
+    }
+
+    Move(timeDelta) {
+        this.threeObject.position.x += this.speed * timeDelta;
+    }
 }

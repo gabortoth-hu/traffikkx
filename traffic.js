@@ -39,10 +39,10 @@ camera.lookAt(0, 10, 0);
 NotHelper.ShowAxes(100,scene);
 
 const car = new Car(0,0,-50)
-scene.add(car)
+car.AddToScene(scene);
 
 const truck = new Truck();
-scene.add(truck);
+truck.AddToScene(scene);
 
 const map = new Map(1000, 1000)
 const rendered_map = map.Render()
@@ -64,8 +64,46 @@ const controls = new OrbitControls( camera, renderer.domElement );
 document.body.appendChild(renderer.domElement);
 renderer.setAnimationLoop(animation);
 
+let accelerate = false; // Is the player accelerating
+let decelerate = false; // Is the player decelerating
+
+window.addEventListener("keydown", function (event) {
+  if (event.key == "ArrowUp") {
+    car.Accelerate();
+    console.log("acc");
+  }
+  if (event.key == "ArrowDown") {
+    car.Decelerate()
+  }
+});
+/*
+window.addEventListener("keyup", function (event) {
+  if (event.key == "ArrowUp") {
+    accelerate = false;
+    return;
+  }
+  if (event.key == "ArrowDown") {
+    decelerate = false;
+    return;
+  }
+});
+*/
+let lastTimestamp;
+
 function animation(timestamp) {
+    
+    if (!lastTimestamp) {
+        lastTimestamp = timestamp;
+        return;
+    }
+
+    const timeDelta = timestamp - lastTimestamp;
+
+    car.Move(timeDelta);
+
     controls.update();
     renderer.render(scene, camera);
+
+    lastTimestamp = timestamp;
 }
 
