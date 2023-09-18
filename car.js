@@ -1,28 +1,33 @@
 
 import * as THREE from "three";
 import Vehicle from "./vehicle";
+import NotHelper from "./not_helper"
 
 export default class Car extends Vehicle {
 
-    constructor() {
-        super();
+    constructor(offsetX = 0, offsetY=0, offsetZ=0) {
+        super(offsetX, offsetY, offsetZ);
         const car = new THREE.Group();
         
         const backWheel = this.Wheel();
-        backWheel.position.y = 6;
-        backWheel.position.x = -18;
+        backWheel.position.y = 6 + offsetY;
+        backWheel.position.x = -18 + offsetX;
+        backWheel.position.z = offsetZ;
         car.add(backWheel);
         
         const frontWheel = this.Wheel();
-        frontWheel.position.y = 6;  
-        frontWheel.position.x = 18;
+        frontWheel.position.y = 6; + offsetY  
+        frontWheel.position.x = 18 + offsetX;
+        frontWheel.position.z = offsetZ;
         car.add(frontWheel);
     
         const main = new THREE.Mesh(
         new THREE.BoxGeometry(60, 15, 30),
-        new THREE.MeshLambertMaterial({ color: 0x78b14b })
+        new THREE.MeshLambertMaterial({ color: NotHelper.PickRandom(this.VEHICLE_COLORS()) })
         );
-        main.position.y = 12;
+        main.position.x = offsetX;
+        main.position.y = 12 + offsetY;
+        main.position.z = offsetZ
         car.add(main);
     
         const carFrontTexture = this.getCarFrontTexture();
@@ -48,8 +53,9 @@ export default class Car extends Vehicle {
         new THREE.MeshLambertMaterial({ map: carLeftSideTexture }),
         ]);  
 
-        cabin.position.x = -6;
-        cabin.position.y = 25.5;
+        cabin.position.x = -6 + offsetX;
+        cabin.position.y = 25.5 + offsetY;
+        cabin.position.z = offsetZ;
         car.add(cabin);
     
         return car;
