@@ -1,16 +1,19 @@
 
 import * as THREE from "three";
-export default class Car {
+import Vehicle from "./vehicle";
+
+export default class Car extends Vehicle {
 
     constructor() {
+        super();
         const car = new THREE.Group();
         
-        const backWheel = this.createWheels();
+        const backWheel = this.Wheel();
         backWheel.position.y = 6;
         backWheel.position.x = -18;
         car.add(backWheel);
         
-        const frontWheel = this.createWheels();
+        const frontWheel = this.Wheel();
         frontWheel.position.y = 6;  
         frontWheel.position.x = 18;
         car.add(frontWheel);
@@ -52,27 +55,19 @@ export default class Car {
         return car;
     }
 
-    
-    createWheels() {
-        const geometry = new THREE.BoxGeometry(12, 12, 33);
-        const material = new THREE.MeshLambertMaterial({ color: 0x333333 });
-        const wheel = new THREE.Mesh(geometry, material);
-        return wheel;
-    }
-
     getCarFrontTexture() {
-    const canvas = document.createElement("canvas");
-    canvas.width = 64;
-    canvas.height = 32;
-    const context = canvas.getContext("2d");
+        const canvas = document.createElement("canvas");
+        canvas.width = 64;
+        canvas.height = 32;
+        const context = canvas.getContext("2d");
 
-    context.fillStyle = "#ffffff";
-    context.fillRect(0, 0, 64, 32);
+        context.fillStyle = "#ffffff";
+        context.fillRect(0, 0, 64, 32);
 
-    context.fillStyle = "#666666";
-    context.fillRect(8, 8, 48, 24);
+        context.fillStyle = "#666666";
+        context.fillRect(8, 8, 48, 24);
 
-    return new THREE.CanvasTexture(canvas);
+        return new THREE.CanvasTexture(canvas);
     }
 
     getCarSideTexture() {

@@ -1,31 +1,9 @@
 
 import * as THREE from "three";
+import Vehicle from "./vehicle";
+import NotHelper from "./not_helper"
 
-const vehicleColors = [
-    0xa52523,
-    0xef2d56,
-    0x0ad3ff,
-    0xff9f1c,
-    0xa52523,
-    0xbdb638,
-    0x78b14b
-    ];
-
-export default class Truck {
-
-  Wheel() {
-    const wheelGeometry = new THREE.BoxGeometry(12, 33, 12);
-    const wheelMaterial = new THREE.MeshLambertMaterial({ color: 0x333333 });
-    const wheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
-    wheel.position.z = 6;
-    wheel.castShadow = false;
-    wheel.receiveShadow = false;
-    return wheel;
-  }
-
-  pickRandom(array) {
-    return array[Math.floor(Math.random() * array.length)];
-  }
+export default class Truck extends Vehicle {
 
   getTruckFrontTexture() {
     const canvas = document.createElement("canvas");
@@ -58,8 +36,9 @@ export default class Truck {
   }
   
   constructor() {
+    super();
     const truck = new THREE.Group();
-    const color = this.pickRandom(vehicleColors);
+    const color = NotHelper.PickRandom(this.VEHICLE_COLORS);
   
     const base = new THREE.Mesh(
       new THREE.BoxGeometry(100, 25, 5),

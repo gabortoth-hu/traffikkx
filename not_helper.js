@@ -36,4 +36,8 @@ export default class NotHelper {
         const hlp = new THREE.AxesHelper(size);
         scene.add(hlp);
     }
+
+    static PickRandom(array) {
+        return array[Math.floor(Math.random() * array.length)];
+    }
 }
