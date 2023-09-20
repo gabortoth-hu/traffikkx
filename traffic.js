@@ -66,22 +66,28 @@ renderer.setAnimationLoop(animation);
 
 let accelerate = false; // Is the player accelerating
 let decelerate = false; // Is the player decelerating
+let steerright = false; // Is the player steering right
+let steerleft = false;  // Is the player steering left
 
 window.addEventListener("keydown", function (event) {
   if (event.key == "ArrowUp") {
-    car.Accelerate();
+    accelerate = true;
+    return;
   }
   if (event.key == "ArrowDown") {
-    car.Decelerate();
+    decelerate = true;
+    return;
   }
   if (event.key == "ArrowRight") {
-    car.SteerRight();
+    steerright = true;
+    return;
   }
   if (event.key == "ArrowLeft") {
-    car.SteerLeft();
+    steerleft = true;
+    return;
   }
 });
-/*
+
 window.addEventListener("keyup", function (event) {
   if (event.key == "ArrowUp") {
     accelerate = false;
@@ -91,8 +97,16 @@ window.addEventListener("keyup", function (event) {
     decelerate = false;
     return;
   }
+  if (event.key == "ArrowRight") {
+    steerright = false;
+    return;
+  }
+  if (event.key == "ArrowLeft") {
+    steerleft = false;
+    return;
+  }
 });
-*/
+
 let lastTimestamp;
 
 function animation(timestamp) {
@@ -103,6 +117,15 @@ function animation(timestamp) {
     }
 
     const timeDelta = timestamp - lastTimestamp;
+
+    if(accelerate)
+      car.Accelerate();
+    if(decelerate)
+      car.Decelerate();
+    if(steerleft)
+      car.SteerLeft();
+    if(steerright)
+      car.SteerRight();
 
     car.Move(timeDelta);
 
