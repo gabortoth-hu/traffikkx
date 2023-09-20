@@ -17,4 +17,4 @@ npm install --save-dev vite
 npx vite
 
 # Screenshots
-![](assets/traffikx.gif)
+![](assets/steering_demo.gif)
