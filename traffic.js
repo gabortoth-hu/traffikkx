@@ -15,7 +15,7 @@ const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
 scene.add(ambientLight);
 
 // directional light
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1.8);
 directionalLight.position.set(200,500, 300);
 scene.add(directionalLight); 
 
@@ -24,7 +24,7 @@ const aspectRatio = window.innerWidth / window.innerHeight;
 const cameraWidth = 150;
 const cameraHeight = cameraWidth / aspectRatio;
 
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight)
+const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight)
 // const camera = new THREE.OrthographicCamera(
 //   cameraWidth / -2, // left
 //   cameraWidth / 2, // right
@@ -70,7 +70,6 @@ let decelerate = false; // Is the player decelerating
 window.addEventListener("keydown", function (event) {
   if (event.key == "ArrowUp") {
     car.Accelerate();
-    console.log("acc");
   }
   if (event.key == "ArrowDown") {
     car.Decelerate()

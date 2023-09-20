@@ -18,8 +18,9 @@ export default class Vehicle {
     offsetX = 0;
     offsetY = 0;
     offsetZ = 0;
-    speed = 0;
-    power = 1.2;
+    currentSpeed = 0;
+    power = 0.2;
+    maxSpeed = 0.2
     threeObject;
 
     constructor(offsetX = 0, offsetY=0, offsetZ=0) {
@@ -40,15 +41,30 @@ export default class Vehicle {
     }
 
     Accelerate() {
-        this.speed = this.speed == 0 ? 0.1 : this.speed * this.power;
-        console.log('Speed: '+this.speed);
+        const accelerateCalc = (speed) => speed + Math.abs(speed) * this.power;
+
+        this.currentSpeed = this.currentSpeed > -0.01 && this.currentSpeed < 0.01
+            ? 0.01 
+            : accelerateCalc(this.currentSpeed) > this.maxSpeed
+                ? this.maxSpeed
+                : accelerateCalc(this.currentSpeed);
+
+        console.log(this.currentSpeed);
     }
 
     Decelerate(){
-        this.speed = this.speed == 0 ? -0.1 : this.speed * this.power;
+        const decelerateCalc = (speed) => speed - Math.abs(speed) * this.power;
+
+        this.currentSpeed = this.currentSpeed > -0.01 && this.currentSpeed < 0.01
+            ? -0.01
+            : Math.abs(decelerateCalc(this.currentSpeed)) > this.maxSpeed
+                ? -this.maxSpeed
+                : decelerateCalc(this.currentSpeed);
+
+        console.log(this.currentSpeed);
     }
 
     Move(timeDelta) {
-        this.threeObject.position.x += this.speed * timeDelta;
+        this.threeObject.position.x += this.currentSpeed * timeDelta;
     }
 }
