@@ -19,9 +19,12 @@ export default class Vehicle {
     offsetY = 0;
     offsetZ = 0;
     currentSpeed = 0;
+    angle = 0;
     power = 0.2;
     maxSpeed = 0.2
-    threeObject;
+    movingGroup;
+    rotatingGroup;
+    threeGroup;
 
     constructor(offsetX = 0, offsetY=0, offsetZ=0) {
         this.offsetX = offsetX;
@@ -30,14 +33,25 @@ export default class Vehicle {
     }
 
     AddToScene(scene) {
-        scene.add(this.threeObject);
+        //this.movingGroup = new THREE.Group();
+        //scene.add(this.movingGroup);
+        scene.add(this.threeGroup);
+        //this.movingGroup.add(this.rotatingGroup);
     }
 
     Wheel() {
-        const geometry = new THREE.BoxGeometry(12, 12, 33);
+        const geometry = new THREE.BoxGeometry(33, 12, 12);
         const material = new THREE.MeshLambertMaterial({ color: 0x333333 });
         const wheel = new THREE.Mesh(geometry, material);
         return wheel;
+    }
+
+    SteerLeft() {
+        this.angle += Math.PI / 45;
+    }
+
+    SteerRight() {
+        this.angle -= Math.PI / 45;
     }
 
     Accelerate() {
@@ -49,7 +63,7 @@ export default class Vehicle {
                 ? this.maxSpeed
                 : accelerateCalc(this.currentSpeed);
 
-        console.log(this.currentSpeed);
+        //console.log(this.currentSpeed);
     }
 
     Decelerate(){
@@ -61,10 +75,14 @@ export default class Vehicle {
                 ? -this.maxSpeed
                 : decelerateCalc(this.currentSpeed);
 
-        console.log(this.currentSpeed);
+        //console.log(this.currentSpeed);
     }
 
     Move(timeDelta) {
-        this.threeObject.position.x += this.currentSpeed * timeDelta;
+        const distance = this.currentSpeed * timeDelta;
+        this.threeGroup.rotation.y = this.angle;
+        this.threeGroup.position.x +=Math.sin(this.angle)*distance;
+        this.threeGroup.position.z +=Math.cos(this.angle)*distance;
+        console.log(this.angle)
     }
 }

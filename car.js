@@ -9,22 +9,22 @@ export default class Car extends Vehicle {
         super(offsetX, offsetY, offsetZ);
 
         const car = new THREE.Group();
-        this.threeObject = car;
+        this.threeGroup = car;
 
         const backWheel = this.Wheel();
         backWheel.position.y = 6 + offsetY;
-        backWheel.position.x = -18 + offsetX;
-        backWheel.position.z = offsetZ;
+        backWheel.position.x = offsetX;
+        backWheel.position.z = -18 + offsetZ;
         car.add(backWheel);
 
         const frontWheel = this.Wheel();
         frontWheel.position.y = 6; + offsetY
-        frontWheel.position.x = 18 + offsetX;
-        frontWheel.position.z = offsetZ;
+        frontWheel.position.x = offsetX;
+        frontWheel.position.z = 18 + offsetZ;
         car.add(frontWheel);
 
         const main = new THREE.Mesh(
-            new THREE.BoxGeometry(60, 15, 30),
+            new THREE.BoxGeometry(30, 15, 60),
             new THREE.MeshLambertMaterial({ color: NotHelper.PickRandom(this.VEHICLE_COLORS()) })
         );
         main.position.x = offsetX;
@@ -35,29 +35,24 @@ export default class Car extends Vehicle {
         const carFrontTexture = this.getCarFrontTexture();
         const carBackTexture = this.getCarFrontTexture();
         const carRightSideTexture = this.getCarSideTexture();
+        carRightSideTexture.center = new THREE.Vector2(0.5, 0.5);
+        carRightSideTexture.rotation = Math.PI;
+        carRightSideTexture.flipY = false;
 
         const carLeftSideTexture = this.getCarSideTexture();
-        carLeftSideTexture.center = new THREE.Vector2(0.5, 0.5);
-        carLeftSideTexture.rotation = Math.PI;
-        carLeftSideTexture.flipY = false;
 
-        // const cabin = new THREE.Mesh(
-        //   new THREE.BoxBufferGeometry(33, 12, 24),
-        //   new THREE.MeshLambertMaterial({ color: 0xffffff })
-        // );
-
-        const cabin = new THREE.Mesh(new THREE.BoxGeometry(33, 12, 24), [
-            new THREE.MeshLambertMaterial({ map: carFrontTexture }),
-            new THREE.MeshLambertMaterial({ map: carBackTexture }),
-            new THREE.MeshLambertMaterial({ color: 0xffffff }), // top
-            new THREE.MeshLambertMaterial({ color: 0xffffff }), // bottom
+        const cabin = new THREE.Mesh(new THREE.BoxGeometry(24, 12, 33), [
             new THREE.MeshLambertMaterial({ map: carRightSideTexture }),
             new THREE.MeshLambertMaterial({ map: carLeftSideTexture }),
+            new THREE.MeshLambertMaterial({ color: 0xffffff }), // top
+            new THREE.MeshLambertMaterial({ color: 0xffffff }), // bottom
+            new THREE.MeshLambertMaterial({ map: carFrontTexture }),
+            new THREE.MeshLambertMaterial({ map: carBackTexture }),
         ]);
 
-        cabin.position.x = -6 + offsetX;
+        cabin.position.x = offsetX;
         cabin.position.y = 25.5 + offsetY;
-        cabin.position.z = offsetZ;
+        cabin.position.z = -6 + offsetZ;
         car.add(cabin);
     }
 

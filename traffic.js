@@ -38,11 +38,11 @@ camera.lookAt(0, 10, 0);
 
 NotHelper.ShowAxes(100,scene);
 
-const car = new Car(0,0,-50)
+const car = new Car(0,0,0)
 car.AddToScene(scene);
 
-const truck = new Truck();
-truck.AddToScene(scene);
+//const truck = new Truck();
+//truck.AddToScene(scene);
 
 const map = new Map(1000, 1000)
 const rendered_map = map.Render()
@@ -72,7 +72,13 @@ window.addEventListener("keydown", function (event) {
     car.Accelerate();
   }
   if (event.key == "ArrowDown") {
-    car.Decelerate()
+    car.Decelerate();
+  }
+  if (event.key == "ArrowRight") {
+    car.SteerRight();
+  }
+  if (event.key == "ArrowLeft") {
+    car.SteerLeft();
   }
 });
 /*
