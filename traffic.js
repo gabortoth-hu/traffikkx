@@ -2,6 +2,8 @@
 // https://www.youtube.com/watch?v=JhgBwJn1bQw&t=1015s
 
 import * as THREE from "three";
+import * as CANNON from "cannon-es";
+import CannonDebugger from "cannon-es-debugger";
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import Car from "./car.js";
 import Truck from "./truck.js";
@@ -53,6 +55,26 @@ scene.add(rendered_map)
 //var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 //sphere.position.set(40, 0, 0);
 //scene.add(sphere)
+
+const physicsWorld = new CANNON.World({
+  gravity: new CANNON.Vec3(0, -9.82, 0)
+});
+
+const groundBody = new CANNON.Body({
+  type: CANNON.Body.STATIC,
+  shape: new CANNON.Plane()
+})
+
+groundBody.quaternion.setFromEuler(-Math.PI / 2, 0,0);
+physicsWorld.addBody(groundBody);
+
+const sphereBody = new CANNON.Body({
+  mass: 5,
+  shape: new CANNON.Sphere(5)
+});
+
+sphereBody.position.set(0,10,0);
+physicsWorld.addBody(sphereBody);
 
 // Set up renderer
 const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -109,8 +131,11 @@ window.addEventListener("keyup", function (event) {
 
 let lastTimestamp;
 
+const cannonDebugger = new CannonDebugger(scene, physicsWorld, {});
+
 function animation(timestamp) {
-    
+    physicsWorld.fixedStep();
+
     if (!lastTimestamp) {
         lastTimestamp = timestamp;
         return;
@@ -129,6 +154,7 @@ function animation(timestamp) {
 
     car.Move(timeDelta);
 
+    cannonDebugger.update();
     controls.update();
     renderer.render(scene, camera);
 

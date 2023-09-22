@@ -9,6 +9,8 @@ npm install --save three
 
 ## cannon.js
 npm install --save cannon-es
+npm install --save cannon-es-debugger
+npm install --save three-to-cannon
 
 ## vite
 npm install --save-dev vite

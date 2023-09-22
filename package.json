@@ -1,7 +1,9 @@
 {
   "dependencies": {
     "cannon-es": "^0.20.0",
-    "three": "^0.156.1"
+    "cannon-es-debugger": "^1.0.0",
+    "three": "^0.156.1",
+    "three-to-cannon": "^4.3.0"
   },
   "devDependencies": {
     "vite": "^4.4.9"

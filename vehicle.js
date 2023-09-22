@@ -15,9 +15,6 @@ export default class Vehicle {
             ]; 
     }
 
-    offsetX = 0;
-    offsetY = 0;
-    offsetZ = 0;
     currentSpeed = 0;
     angle = 0;
     power = 0.2;
@@ -26,10 +23,7 @@ export default class Vehicle {
     rotatingGroup;
     threeGroup;
 
-    constructor(offsetX = 0, offsetY=0, offsetZ=0) {
-        this.offsetX = offsetX;
-        this.offsetY = offsetY;
-        this.offsetZ = offsetZ;
+    constructor() {
     }
 
     AddToScene(scene) {

@@ -37,7 +37,7 @@ export default class Truck extends Vehicle {
   constructor(offsetX = 0, offsetY = 0, offsetZ = 0) {
     super(offsetX, offsetY, offsetZ);
     const truck = new THREE.Group();
-    this.threeObject = truck;
+    this.threeGroup = truck;
     const color = NotHelper.PickRandom(this.VEHICLE_COLORS());
 
     const base = new THREE.Mesh(
